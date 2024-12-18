@@ -1,13 +1,15 @@
 import React from 'react'
 import { IconButton, Badge } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { useCart } from './CartContext'
 
-function CartWidget() {
-  const cartItemCount = 0
+const CartWidget = () => {
+  const { cart } = useCart()
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0)
 
   return (
     <IconButton
-    color="inherit"
+      color="inherit"
       disableRipple
       sx={{
         '&:focus': {
@@ -16,7 +18,7 @@ function CartWidget() {
       }}
     >
       <Badge
-        badgeContent={cartItemCount === 0 ? '0' : cartItemCount}
+        badgeContent={totalItems === 0 ? '0' : totalItems}
         color="error"
         anchorOrigin={{
           vertical: 'top',
