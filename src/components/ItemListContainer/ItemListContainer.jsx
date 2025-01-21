@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { useParams, Link, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import "./ItemListContainer.css"
+import ItemList from "../ItemList/ItemList"
 
 const ItemListContainer = ({ greeting }) => {
   const { id } = useParams()
@@ -44,16 +45,7 @@ const ItemListContainer = ({ greeting }) => {
       <h2>{greeting}</h2>
       {loading && <p>Cargando productos...</p>}
       {error && <p>Error: {error}</p>}
-      <div className="product-list">
-        {products.map((product) => (
-          <div key={product.id} className="product-item">
-            <h3>{product.title}</h3>
-            <img src={product.thumbnail} alt={product.title} style={{ width: "150px", height: "150px" }} />
-            <p>Precio: ${product.price}</p>
-            <Link to={`/item/${product.id}`}>Ver Detalles</Link>
-          </div>
-        ))}
-      </div>
+      {!loading && !error && <ItemList products={products} />}
     </div>
   )
 }

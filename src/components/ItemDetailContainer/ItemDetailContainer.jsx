@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { useCart } from "./CartContext"
-import ItemCount from "./ItemCount"
+import { useCart } from "../CartContext/CartContext"
+import ItemCount from "../ItemCount/ItemCount"
+import ItemDetail from "../ItemDetail/ItemDetail"
 
 const ItemDetailContainer = () => {
   const { id } = useParams()
@@ -44,11 +45,13 @@ const ItemDetailContainer = () => {
 
   return (
     <div>
-      <h2>{product.title}</h2>
-      <img src={product.thumbnail} alt={product.title} style={{ width: "300px", height: "300px" }} />
-      <p>Descripción: {product.description}</p>
-      <p>Precio: ${product.price}</p>
-      <ItemCount stock={10} initial={1} onAdd={handleAddToCart} />
+      {product && (
+        <>
+          <ItemDetail product={product} />
+          
+          <ItemCount stock={10} initial={1} onAdd={handleAddToCart} />
+        </>
+      )}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React from "react"
 import { IconButton, Badge } from "@mui/material"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
-import { useCart } from "./CartContext"
+import { useCart } from "../CartContext/CartContext"
 
 const CartWidget = () => {
   const { cart } = useCart()
