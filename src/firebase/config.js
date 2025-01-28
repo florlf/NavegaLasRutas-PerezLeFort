@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBckPADk8QD8qr5QGGKXt7del-RVLckzq8",
-  authDomain: "tienda-perezlefort.firebaseapp.com",
-  projectId: "tienda-perezlefort",
-  storageBucket: "tienda-perezlefort.firebasestorage.app",
-  messagingSenderId: "842023475920",
-  appId: "1:842023475920:web:6e56aadc0cf163eda75cd5"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
