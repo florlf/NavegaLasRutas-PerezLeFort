@@ -1,33 +1,27 @@
-import React from "react"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { CartProvider } from "./components/CartContext/CartContext"
-import NavBar from "./components/NavBar/NavBar"
-import ItemListContainer from "./components/ItemListContainer/ItemListContainer"
-import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer"
-import NotFound from "./components/NotFound/NotFound"
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import Navbar from "./components/Navbar";
+import ItemListContainer from "./components/ItemListContainer";
+import ItemDetailContainer from "./components/ItemDetailContainer";
+import Cart from "./components/Cart";
+import CheckoutForm from "./components/CheckoutForm";
+import NotFound from './components/NotFound';
 
 const App = () => {
   return (
-    <CartProvider>
-      <Router>
-        <NavBar />
-        <div className="container mt-5 pt-4">
-          <Routes>
-            <Route
-              path="/"
-              element={<ItemListContainer greeting="Nuevos Productos" />}
-            />
-            <Route
-              path="/category/:id"
-              element={<ItemListContainer greeting="Productos por categoría" />}
-            />
-            <Route path="/item/:id" element={<ItemDetailContainer />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-      </Router>
-    </CartProvider>
-  )
-}
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<ItemListContainer />} />
+        <Route path="/item/:id" element={<ItemDetailContainer />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<CheckoutForm />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <ToastContainer />
+    </BrowserRouter>
+  );
+};
 
-export default App
+export default App;
