@@ -13,8 +13,12 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const addToCart = (product, quantity) => {
+    if (quantity <= 0) {
+      return;
+    }
+  
     const existingProduct = cart.find((item) => item.id === product.id);
-
+  
     if (existingProduct) {
       setCart(
         cart.map((item) =>
@@ -27,7 +31,21 @@ export const CartProvider = ({ children }) => {
       setCart([...cart, { ...product, quantity }]);
     }
 
-  toast.success(`${product.title} ha sido agregado al carrito`);
+    toast.success(`${product.title} ha sido agregado al carrito`, {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      style: {
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.24)",
+        backgroundColor: "white",
+        color: "black",
+        fontSize: "16px",
+        borderRadius: "20px",
+        borderColor: "black",
+        padding: "10px 30px",
+      },
+    });
   };
 
   const removeFromCart = (productId) => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
+import "./CartItem.css";
 
 const CartItem = ({ product }) => {
   const { removeFromCart, updateQuantity } = useCart();
@@ -19,15 +20,20 @@ const CartItem = ({ product }) => {
   };
 
   return (
-    <div>
-      <img src={product.image} alt={product.title} style={{ width: "100px", height: "100px"}}/>
-      <h3>{product.title}</h3>
-      <p>Precio: ${product.price}</p>
-      <p>Cantidad: {product.quantity}</p>
-      
-      <button onClick={handleIncrease}>+ Agregar</button>
-      <button onClick={handleDecrease}>- Quitar</button>
-      <button onClick={handleRemove}>Eliminar</button>
+    <div className="cart-item">
+      <div className="cart-item-image">
+        <img src={product.image} alt={product.title} />
+      </div>
+      <div className="cart-item-details">
+        <h3>{product.title}</h3>
+        <p>Precio: ${product.price}</p>
+        <p>Cantidad: {product.quantity}</p>
+      </div>
+      <div className="cart-item-actions">
+        <button onClick={handleIncrease}>+</button>
+        <button onClick={handleDecrease}>-</button>
+        <button onClick={handleRemove}>Eliminar</button>
+      </div>
     </div>
   );
 };

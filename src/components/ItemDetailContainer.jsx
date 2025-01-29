@@ -12,9 +12,7 @@ const ItemDetailContainer = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      console.log("ID recibido desde la URL:", id);
       const product = await fetchProductById(id);
-      console.log("Producto obtenido:", product);
   
       if (product) {
         setProduct(product);

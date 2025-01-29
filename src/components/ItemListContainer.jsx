@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ItemList from "./ItemList";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
+import "./ItemListContainer.css";
 
 const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
@@ -21,8 +22,8 @@ const ItemListContainer = () => {
 
   return (
     <div className="item-list-container">
-      <h2>¡Bienvenido a nuestra tienda!</h2>
-      <ItemList products={products} />
+      <h2>¡Bienvenido/a a nuestra tienda!</h2>
+      <ItemList products={products} className="item-list"/>
     </div>
   );
 };

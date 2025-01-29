@@ -20,17 +20,19 @@ const Cart = () => {
       <h2>Tu Carrito</h2>
 
       {cart.length === 0 ? (
-        <p>El carrito está vacío.</p>
+        <div className="empty-cart">
+          <p>El carrito está vacío</p>
+        </div>
       ) : (
         <div>
           {cart.map((product) => (
             <CartItem key={product.id} product={product} />
           ))}
-          <h3>Total: ${totalPrice}</h3>
+          <h3 className="total">Total: ${totalPrice}</h3>
         </div>
       )}
 
-      <button onClick={() => navigate("/")}>Volver a la Página Principal</button>
+      <button className="btn-inicio" onClick={() => navigate("/")}>Volver a Inicio</button>
 
       {cart.length > 0 && (
         <button onClick={goToCheckout}>Continuar con la compra</button>

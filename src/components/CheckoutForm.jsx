@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import "./CheckoutForm.css";
 
 const CheckoutForm = () => {
   const [formData, setFormData] = useState({ name: "", email: "" });
@@ -49,14 +50,14 @@ const CheckoutForm = () => {
   return (
     <div>
       {purchaseCompleted ? (
-        <div>
+        <div className="checkout-success">
           <h2>¡Compra exitosa!</h2>
-          <p>Tu número de compra es: {orderNumber}</p>
+          <p>Tu número de compra es: {orderNumber} y será enviado a tu e-mail junto con tu código de canje.</p>
           <p>Serás redirigido a la página principal en {countdown} segundos...</p>
         </div>
       ) : (
-        <div>
-          <h2>Checkout</h2>
+        <div className="checkout-form">
+          <h2>Formulario de Compra</h2>
           <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name">Nombre:</label>

@@ -10,7 +10,9 @@ const Navbar = () => {
       </Link>
       <div className="links">
         <Link to="/">Inicio</Link>
-        <Link to="/cart">
+        <Link to="/skins/skins-1">Skins Legendarias</Link>
+        <Link to="/skins/skins-2">Skins Épicas</Link>
+        <Link to="/cart" className="cart-container">
           <CartWidget />
         </Link>
       </div>
