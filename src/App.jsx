@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import Navbar from "./components/NavBar";
-import ItemListContainer from "./components/ItemListContainer";
+import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import Cart from "./components/Cart";
-import CheckoutForm from "./components/CheckoutForm";
-import NotFound from './components/NotFound';
+import CheckoutForm from "./components/CheckoutForm/CheckoutForm";
+import NotFound from './components/NotFound/NotFound';
 import "./App.css";
 
 const App = () => {

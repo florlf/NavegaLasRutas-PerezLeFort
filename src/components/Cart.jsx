@@ -1,7 +1,7 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
-import CartItem from "./CartItem";
+import CartItem from "./CartItem/CartItem";
 
 const Cart = () => {
   const { cart, totalPrice } = useCart();
