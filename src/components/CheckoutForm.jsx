@@ -4,10 +4,11 @@ import { useCart } from "../context/CartContext";
 import "./CheckoutForm.css";
 
 const CheckoutForm = () => {
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({ name: "", surname: "", email: "" });
   const [purchaseCompleted, setPurchaseCompleted] = useState(false);
   const [countdown, setCountdown] = useState(15);
   const [orderNumber, setOrderNumber] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
   const { clearCart } = useCart();
 
@@ -17,9 +18,9 @@ const CheckoutForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "name" && !/^[a-zA-Z\s]*$/.test(value)) {
+    if ((name === "name" || name === "surname") && !/^[a-zA-Z\s]*$/.test(value)) {
       return;
-    }
+    }    
     setFormData({
       ...formData,
       [name]: value,
@@ -28,11 +29,14 @@ const CheckoutForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    setOrderNumber(generateOrderNumber());
-    setPurchaseCompleted(true);
-
-    clearCart();
+  
+    setIsProcessing(true);
+    setTimeout(() => {
+      setOrderNumber(generateOrderNumber());
+      setPurchaseCompleted(true);
+      setIsProcessing(false);
+      clearCart();
+    }, 3000);
   };
 
   useEffect(() => {
@@ -57,32 +61,53 @@ const CheckoutForm = () => {
         </div>
       ) : (
         <div className="checkout-form">
-          <h2>Formulario de Compra</h2>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="name">Nombre:</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+          {isProcessing && (
+            <div className="processing-container">
+              <div className="loader"></div>
+              <p>Procesando compra...</p>
             </div>
-            <div>
-              <label htmlFor="email">Correo electrónico:</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <button type="submit">Finalizar compra</button>
-          </form>
+          )}
+          {!isProcessing && (
+            <>
+              <h2>Formulario de Compra</h2>
+              <form onSubmit={handleSubmit}>
+                <div>
+                  <label htmlFor="name">Nombre:</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="surname">Apellido:</label>
+                  <input
+                    type="text"
+                    id="surname"
+                    name="surname"
+                    value={formData.surname}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email">Correo electrónico:</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <button type="submit">Finalizar compra</button>
+              </form>
+            </>
+          )}
         </div>
       )}
     </div>

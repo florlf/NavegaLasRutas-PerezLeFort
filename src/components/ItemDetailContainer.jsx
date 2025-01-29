@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/config";
+import { useParams, Navigate } from "react-router-dom";
 import { fetchProductById } from "../firebase/db";
 import ItemDetail from "./ItemDetail";
 
@@ -12,27 +10,30 @@ const ItemDetailContainer = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const product = await fetchProductById(id);
-  
-      if (product) {
-        setProduct(product);
-      } else {
-        console.log("Producto no encontrado");
+      try {
+        const product = await fetchProductById(id);
+        if (product) {
+          setProduct(product);
+        } else {
+          setProduct(null);
+        }
+      } catch (error) {
+        console.error("Error al obtener el producto:", error);
+        setProduct(null);
       }
   
       setLoading(false);
     };
   
     fetchProduct();
-  }, [id]);
-
+  }, [id]);  
 
   if (loading) {
     return <p>Cargando...</p>;
   }
 
   if (!product) {
-    return <p>Producto no encontrado</p>;
+    return <Navigate to="/404" />;
   }
 
   return <ItemDetail product={product} />;

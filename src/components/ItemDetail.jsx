@@ -12,9 +12,9 @@ const ItemDetail = ({ product }) => {
 
   return (
     <div className="item-detail shadow">
-      <img src={product.image} alt={product.title} style={{ width: '150px', height: '150px' }}/>
+      <img src={product.image} alt={product.title} style={{ width: '270px', height: '150px' }}/>
       <h2>{product.title}</h2>
-      <p>{product.description}</p>
+      <p className="description">{product.description}</p>
       <p>${product.price}</p>
       <div>
         <input
