@@ -50,9 +50,13 @@ const CheckoutForm = () => {
       });
 
       setOrderNumber(docRef.id);
-      setPurchaseCompleted(true);
-      setIsProcessing(false);
-      clearCart();
+
+      setTimeout(() => {
+        setPurchaseCompleted(true);
+        setIsProcessing(false);
+        clearCart();
+      }, 2000);
+
     } catch (error) {
       console.error("Error al generar la orden:", error);
       toast.error("Error al procesar la compra. Inténtalo de nuevo.");
