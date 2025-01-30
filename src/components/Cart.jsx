@@ -18,7 +18,6 @@ const Cart = () => {
   return (
     <div>
       <h2>Tu Carrito</h2>
-
       {cart.length === 0 ? (
         <div className="empty-cart">
           <p>El carrito está vacío</p>

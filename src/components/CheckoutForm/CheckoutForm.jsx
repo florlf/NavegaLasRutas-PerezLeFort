@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../../firebase/config";
 import "./CheckoutForm.css";
+import { toast } from "react-toastify";
 
 const CheckoutForm = () => {
   const [formData, setFormData] = useState({ name: "", surname: "", email: "" });
@@ -10,7 +13,7 @@ const CheckoutForm = () => {
   const [orderNumber, setOrderNumber] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
-  const { clearCart } = useCart();
+  const { cart, clearCart } = useCart();
 
   const generateOrderNumber = () => {
     return Math.floor(Math.random() * 1000000);
@@ -27,16 +30,34 @@ const CheckoutForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
     setIsProcessing(true);
-    setTimeout(() => {
-      setOrderNumber(generateOrderNumber());
+
+    try {
+      const docRef = await addDoc(collection(db, "orders"), {
+        customer: { name: formData.name, surname: formData.surname, email: formData.email },
+        items: cart.map(item => ({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          quantity: item.quantity
+        })),
+        total: cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+        date: Timestamp.fromDate(new Date()),
+        status: "Pendiente"
+      });
+
+      setOrderNumber(docRef.id);
       setPurchaseCompleted(true);
       setIsProcessing(false);
       clearCart();
-    }, 3000);
+    } catch (error) {
+      console.error("Error al generar la orden:", error);
+      toast.error("Error al procesar la compra. Inténtalo de nuevo.");
+      setIsProcessing(false);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +77,7 @@ const CheckoutForm = () => {
       {purchaseCompleted ? (
         <div className="checkout-success">
           <h2>¡Compra exitosa!</h2>
-          <p>Tu número de compra es: {orderNumber} y será enviado a tu e-mail junto con tu código de canje.</p>
+          <p>Tu ID de compra es: {orderNumber} y será enviado a tu e-mail junto con tu código de canje.</p>
           <p>Serás redirigido a la página principal en {countdown} segundos...</p>
         </div>
       ) : (
